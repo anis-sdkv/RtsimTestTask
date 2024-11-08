@@ -3,7 +3,7 @@ using RtsimTestTask.Core.DomainEntities;
 
 namespace RtsimTestTask.Core.Abstractions.Repositories;
 
-public interface IOrganizationsRepository : IRepository<Organization, Guid>
+public interface IOrganizationsRepository : IRepository<DomainOrganization, Guid>
 {
-    Task<IEnumerable<Organization>> Search(SearchOrganizationDto searchParams, CancellationToken cancellationToken);
+    Task<IEnumerable<DomainOrganization>> Search(SearchOrganizationDto searchParams, CancellationToken cancellationToken);
 }

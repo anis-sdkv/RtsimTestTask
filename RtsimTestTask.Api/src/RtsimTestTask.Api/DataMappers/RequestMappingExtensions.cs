@@ -6,13 +6,7 @@ namespace RtsimTestTask.Api.DataMappers;
 
 public static class RequestMappingExtensions
 {
-    public static User ToDomainUser(this RegisterRequest request) => new User(
-        null,
-        request.Username ??
-        throw new ArgumentNullException(nameof(request.Username), "UserEntity must contain a non-null UserName."),
-        request.Position,
-        request.OrganizationId
-    );
+    // public static DomainUser ToDomainUser(this RegisterRequest request) => new DomainUser(?);
     
-    public static void ToDomainOrganization(this CreateOrganizationRequest request) => 
+    // public static void ToDomainOrganization(this CreateOrganizationRequest request) => 
 }

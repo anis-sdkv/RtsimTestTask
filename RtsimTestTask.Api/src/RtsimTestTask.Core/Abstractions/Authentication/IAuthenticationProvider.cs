@@ -6,7 +6,7 @@ namespace RtsimTestTask.Core.Abstractions.Authentication;
 
 public interface IAuthenticationProvider
 {
-    Task<OperationResult<Guid>> LoginAsync(LoginUserDto dto, CancellationToken cancellationToken);
-    Task<OperationResult<Guid>> RegisterAsync(User userData, string password, CancellationToken cancellationToken);
-    Task<OperationResult> LogoutAsync();
+    Task<Guid> LoginAsync(LoginUserDto loginData, CancellationToken cancellationToken);
+    Task<Guid> RegisterAsync(RegisterUserDto registerData, CancellationToken cancellationToken);
+    Task LogoutAsync();
 }

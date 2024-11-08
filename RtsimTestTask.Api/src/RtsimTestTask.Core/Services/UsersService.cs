@@ -7,18 +7,18 @@ namespace RtsimTestTask.Core.Services;
 
 public class UsersService(IUnitOfWork unitOfWork) : IUsersService
 {
-    public Task<User> GetByIdAsync(Guid userId, CancellationToken cancellationToken)
+    public Task<DomainUser> GetByIdAsync(Guid userId, CancellationToken cancellationToken)
     {
         return unitOfWork.UserRepository.GetAsync(userId, cancellationToken);
     }
 
-    public Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken)
+    public Task<IEnumerable<DomainUser>> GetAllAsync(CancellationToken cancellationToken)
     {
         return unitOfWork.UserRepository.GetAllAsync(cancellationToken);
     }
 
-    public Task UpdateUserProfileAsync(User user, CancellationToken cancellationToken)
+    public Task UpdateUserProfileAsync(DomainUser domainUser, CancellationToken cancellationToken)
     {
-        return unitOfWork.UserRepository.UpdateAsync(user, cancellationToken);
+        return unitOfWork.UserRepository.UpdateAsync(domainUser, cancellationToken);
     }
 }

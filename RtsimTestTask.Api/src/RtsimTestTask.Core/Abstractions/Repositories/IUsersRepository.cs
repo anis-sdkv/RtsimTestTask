@@ -2,7 +2,7 @@
 
 namespace RtsimTestTask.Core.Abstractions.Repositories;
 
-public interface IUsersRepository : IRepository<User, Guid>
+public interface IUsersRepository : IRepository<DomainUser, Guid>
 {
-    Task<IEnumerable<User>> GetUsersByOrganization(Guid organizationId, CancellationToken cancellationToken);
+    Task<IEnumerable<DomainUser>> GetUsersByOrganization(Guid organizationId, CancellationToken cancellationToken);
 }

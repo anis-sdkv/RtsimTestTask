@@ -8,7 +8,7 @@ public static class OrganizationFaker
 {
     private static readonly object Lock = new();
 
-    private static readonly Faker<Organization> Faker = new AutoFaker<Organization>()
+    private static readonly Faker<DomainOrganization> Faker = new AutoFaker<DomainOrganization>()
         .RuleFor(o => o.Id, f => Guid.NewGuid())
         .RuleFor(o => o.CreatedAt, f => f.Date.Past())
         .RuleFor(o => o.OrganizationName, f => f.Company.CompanyName())
@@ -18,7 +18,7 @@ public static class OrganizationFaker
         .RuleFor(o => o.Employees, f =>
             Enumerable.Repeat(0, Random.Shared.Next(1, 10)).Select(x => UserFaker.Generate()).ToList());
 
-    public static Organization Generate()
+    public static DomainOrganization Generate()
     {
         lock (Lock)
         {
@@ -26,8 +26,8 @@ public static class OrganizationFaker
         }
     }
 
-    public static Organization WithId(this Organization src, Guid id) => src with { Id = id };
+    public static DomainOrganization WithId(this DomainOrganization src, Guid id) => src with { Id = id };
 
-    public static IEnumerable<Organization> Generate(int count) =>
+    public static IEnumerable<DomainOrganization> Generate(int count) =>
         Enumerable.Range(0, count).Select(x => OrganizationFaker.Generate());
 }

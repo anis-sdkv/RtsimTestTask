@@ -8,22 +8,22 @@ namespace RtsimTestTask.Core.Services;
 public class OrganizationsService(IUnitOfWork unitOfWork) : IOrganizationsService
 {
     public Task CreateOrganizationAsync(
-        Organization organization,
+        DomainOrganization domainOrganization,
         CancellationToken cancellationToken)
     {
-        unitOfWork.OrganizationRepository.Add(organization, cancellationToken);
+        unitOfWork.OrganizationRepository.Add(domainOrganization, cancellationToken);
         return unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
 
-    public Task<Organization> GetOrganizationByIdAsync(
+    public Task<DomainOrganization> GetOrganizationByIdAsync(
         Guid organizationId,
         CancellationToken cancellationToken)
     {
         return unitOfWork.OrganizationRepository.GetAsync(organizationId, cancellationToken);
     }
 
-    public Task<IEnumerable<Organization>> SearchOrganizationsAsync(
+    public Task<IEnumerable<DomainOrganization>> SearchOrganizationsAsync(
         SearchOrganizationDto searchParams,
         CancellationToken cancellationToken)
     {
@@ -31,7 +31,7 @@ public class OrganizationsService(IUnitOfWork unitOfWork) : IOrganizationsServic
     }
 
 
-    public Task<IEnumerable<User>> GetUsersByOrganizationIdAsync(
+    public Task<IEnumerable<DomainUser>> GetUsersByOrganizationIdAsync(
         Guid organizationId,
         CancellationToken cancellationToken)
     {
@@ -39,10 +39,10 @@ public class OrganizationsService(IUnitOfWork unitOfWork) : IOrganizationsServic
     }
 
     public async Task UpdateOrganizationAsync(
-        Organization organization,
+        DomainOrganization domainOrganization,
         CancellationToken cancellationToken)
     {
-        await unitOfWork.OrganizationRepository.UpdateAsync(organization, cancellationToken);
+        await unitOfWork.OrganizationRepository.UpdateAsync(domainOrganization, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 

@@ -1,6 +1,6 @@
 ﻿namespace RtsimTestTask.Core.DomainEntities;
 
-public record User(
+public record DomainUser(
     Guid Id,
     DateTime CreatedAt,    
     string Username,

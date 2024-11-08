@@ -6,21 +6,21 @@ namespace RtsimTestTask.Core.Abstractions.Services;
 
 public interface IOrganizationsService
 {
-    Task CreateOrganizationAsync(Organization organization, CancellationToken cancellationToken);
+    Task CreateOrganizationAsync(DomainOrganization domainOrganization, CancellationToken cancellationToken);
 
-    Task<Organization> GetOrganizationByIdAsync(
+    Task<DomainOrganization> GetOrganizationByIdAsync(
         Guid organizationId,
         CancellationToken cancellationToken);
 
-    Task<IEnumerable<Organization>> SearchOrganizationsAsync(
+    Task<IEnumerable<DomainOrganization>> SearchOrganizationsAsync(
         SearchOrganizationDto searchParams,
         CancellationToken cancellationToken);
 
 
-    Task<IEnumerable<User>> GetUsersByOrganizationIdAsync(
+    Task<IEnumerable<DomainUser>> GetUsersByOrganizationIdAsync(
         Guid organizationId,
         CancellationToken cancellationToken);
 
-    Task UpdateOrganizationAsync(Organization organization, CancellationToken cancellationToken);
+    Task UpdateOrganizationAsync(DomainOrganization domainOrganization, CancellationToken cancellationToken);
     Task DeleteOrganizationAsync(Guid organizationId, CancellationToken cancellationToken);
 }

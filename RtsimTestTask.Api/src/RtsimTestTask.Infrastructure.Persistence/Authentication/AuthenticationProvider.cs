@@ -8,33 +8,32 @@ using RtsimTestTask.Infrastructure.Persistence.Entities;
 
 namespace RtsimTestTask.Infrastructure.Persistence.Authentication;
 
-public class AuthenticationProvider(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager)
+public class AuthenticationProvider(SignInManager<UserEntity> signInManager)
     : IAuthenticationProvider
 {
-    public async Task<LoginResult> LoginAsync(LoginUserDto model, CancellationToken cancellationToken = default)
+    public async Task<Guid> LoginAsync(LoginUserDto loginData, CancellationToken cancellationToken = default)
     {
-        var signedUser = await signInManager.UserManager.FindByNameAsync(model.Username);
-    
+        var signedUser = await signInManager.UserManager.FindByNameAsync(loginData.Username);
+
         if (signedUser is null)
-            throw new UserNotFoundException(model.Username);
-    
-        var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
-    
-        if (result.Succeeded)
-            return new SuccessLogin();
-    
-        return new FailedLogin();
+            throw new UserNotFoundException(loginData.Username);
+
+        var result = await signInManager.PasswordSignInAsync(loginData.Username, loginData.Password, false, false);
+
+        if (result.Succeeded) return Guid.Parse(signedUser.Id);
+        throw new LoginException();
     }
-    
-    public async Task<RegisterResult> RegisterAsync(User userData, string password, CancellationToken ct = default)
+
+    public async Task<Guid> RegisterAsync(RegisterUserDto registerData, CancellationToken cancellationToken)
     {
-        var userEntity = userData.MapToEntity();
-        var result = await userManager.CreateAsync(userEntity, password);
-        return result.Succeeded
-            ? new RegisterSuccess(Guid.Parse(userEntity.Id))
-            : new RegisterFailed(result.Errors.Select(x => x.Description));
+        var userEntity = registerData.CreateUser();
+        var result = await signInManager.UserManager.CreateAsync(userEntity, registerData.Password);
+        if (!result.Succeeded)
+            throw new RegistrationException(result.Errors.Select(x => x.Description));
+        return Guid.Parse(userEntity.Id);
     }
-    
+
+
     public async Task LogoutAsync()
     {
         await signInManager.SignOutAsync();

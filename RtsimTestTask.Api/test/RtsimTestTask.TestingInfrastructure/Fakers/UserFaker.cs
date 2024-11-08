@@ -8,13 +8,13 @@ public static class UserFaker
 {
     private static readonly object Lock = new();
 
-    private static readonly Faker<User> Faker = new AutoFaker<User>()
+    private static readonly Faker<DomainUser> Faker = new AutoFaker<DomainUser>()
         .RuleFor(u => u.Id, f => Guid.NewGuid())
         .RuleFor(u => u.Username, f => f.Person.UserName)
         .RuleFor(u => u.Email, f => f.Internet.Email())
         .RuleFor(u => u.PhoneNumber, f => f.Phone.PhoneNumber());
 
-    public static User Generate()
+    public static DomainUser Generate()
     {
         lock (Lock)
         {

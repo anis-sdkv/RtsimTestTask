@@ -6,9 +6,9 @@ namespace RtsimTestTask.Core.Abstractions.Services;
 
 public interface IUsersService
 {
-    Task<User> GetByIdAsync(Guid userId, CancellationToken cancellationToken);
+    Task<DomainUser> GetByIdAsync(Guid userId, CancellationToken cancellationToken);
 
-    Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken);
+    Task<IEnumerable<DomainUser>> GetAllAsync(CancellationToken cancellationToken);
 
-    Task UpdateUserProfileAsync(User user, CancellationToken cancellationToken);
+    Task UpdateUserProfileAsync(DomainUser domainUser, CancellationToken cancellationToken);
 }

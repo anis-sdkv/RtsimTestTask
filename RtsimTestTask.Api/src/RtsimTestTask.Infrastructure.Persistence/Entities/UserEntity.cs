@@ -6,5 +6,5 @@ public class UserEntity : IdentityUser
 {
     public string Position { get; set; }
     public Guid OrganizationId { get; set; }
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
 }

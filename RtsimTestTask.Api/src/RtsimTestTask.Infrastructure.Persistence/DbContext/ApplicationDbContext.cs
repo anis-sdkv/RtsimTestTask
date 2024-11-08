@@ -20,8 +20,9 @@ public sealed class ApplicationDbContext : IdentityDbContext<UserEntity>
         Database.EnsureDeleted();
         Database.EnsureCreated();
         modelBuilder
-            .ConfigureUsersEntity()
-            .ConfigureOrganizationsEntity();
+            .ConfigureUsersEntity();
+        Database.Migrate();
+        // .ConfigureOrganizationsEntity();
 
         base.OnModelCreating(modelBuilder);
     }

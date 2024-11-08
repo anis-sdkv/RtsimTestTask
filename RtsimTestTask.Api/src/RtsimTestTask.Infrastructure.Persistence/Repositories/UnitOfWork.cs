@@ -8,11 +8,14 @@ namespace RtsimTestTask.Infrastructure.Persistence.Repositories;
 public class UnitOfWork(ApplicationDbContext dbContext) : IUnitOfWork
 
 {
-    private readonly Lazy<IOrganizationsRepository> _lazyCommentRepository =
-        new(() => new BaseRepository<Organization, Guid?>(dbContext));
+    private readonly Lazy<IOrganizationsRepository> _lazyOrganizationsRepository =
+        new(() => new OrganizationsRepository(dbContext));
 
-    public IOrganizationsRepository OrganizationRepository => _lazyCommentRepository.Value;
-    public IUsersRepository UserRepository { get; }
+    private readonly Lazy<IUsersRepository> _lazyUsersRepository =
+        new(() => new UsersRepository(dbContext));
+
+    public IOrganizationsRepository OrganizationRepository => _lazyOrganizationsRepository.Value;
+    public IUsersRepository UserRepository => _lazyUsersRepository.Value;
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
         dbContext.SaveChangesAsync(cancellationToken);

@@ -19,7 +19,7 @@ public class BaseRepository<TEntity, TKey>(ApplicationDbContext dbContext) where
 
     public TEntity Add(TEntity entity, CancellationToken cancellationToken)
     {
-        _dbSet.Add(entity);
+        return _dbSet.Add(entity).Entity;
     }
 
     public async Task RemoveAsync(TKey id, CancellationToken cancellationToken)

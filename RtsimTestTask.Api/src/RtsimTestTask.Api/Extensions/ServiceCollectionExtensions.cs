@@ -9,8 +9,9 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfigurationRoot config)
     {
-        services.AddEndpointsApiExplorer();
         services.AddControllers();
+        services.AddSwaggerGen();
+        services.AddEndpointsApiExplorer();
         return services;
     }
 }
