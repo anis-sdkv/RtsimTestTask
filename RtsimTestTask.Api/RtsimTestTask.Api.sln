@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsimTestTask.IntegrationTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsimTestTask.Api", "src\RtsimTestTask.Api\RtsimTestTask.Api.csproj", "{E9745CD1-E629-48AA-A547-5DB69549BD14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsimTestTask.TestingInfrastructure", "test\RtsimTestTask.TestingInfrastructure\RtsimTestTask.TestingInfrastructure.csproj", "{71D5F2D0-9341-4F78-8B03-DEA23F5EA68A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{E9745CD1-E629-48AA-A547-5DB69549BD14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9745CD1-E629-48AA-A547-5DB69549BD14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9745CD1-E629-48AA-A547-5DB69549BD14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71D5F2D0-9341-4F78-8B03-DEA23F5EA68A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71D5F2D0-9341-4F78-8B03-DEA23F5EA68A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71D5F2D0-9341-4F78-8B03-DEA23F5EA68A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71D5F2D0-9341-4F78-8B03-DEA23F5EA68A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F4B26FA8-195E-408B-ADC6-E7AC736BBFED} = {38E8661A-802C-4FE9-8E29-9A4D686B8E60}
@@ -54,5 +60,6 @@ Global
 		{40529A00-F4D0-45BC-8086-43E07AD0DFCE} = {C7519737-41A8-4489-A7E9-2F19BCDF537F}
 		{519519CE-187D-4229-B76D-F679427C4050} = {C7519737-41A8-4489-A7E9-2F19BCDF537F}
 		{E9745CD1-E629-48AA-A547-5DB69549BD14} = {38E8661A-802C-4FE9-8E29-9A4D686B8E60}
+		{71D5F2D0-9341-4F78-8B03-DEA23F5EA68A} = {C7519737-41A8-4489-A7E9-2F19BCDF537F}
 	EndGlobalSection
 EndGlobal

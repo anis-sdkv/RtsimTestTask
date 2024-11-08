@@ -1,9 +1,7 @@
 ﻿using RtsimTestTask.Core.Abstractions.Repositories;
 using RtsimTestTask.Core.Abstractions.Services;
-using RtsimTestTask.Core.DataTransferObjects;
 using RtsimTestTask.Core.DataTransferObjects.RequestModels;
 using RtsimTestTask.Core.DomainEntities;
-using RtsimTestTask.Core.Exceptions;
 
 namespace RtsimTestTask.Core.Services;
 

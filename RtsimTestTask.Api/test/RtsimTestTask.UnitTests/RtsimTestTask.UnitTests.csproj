@@ -24,4 +24,8 @@
       <Folder Include="CommonTests\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\RtsimTestTask.TestingInfrastructure\RtsimTestTask.TestingInfrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
