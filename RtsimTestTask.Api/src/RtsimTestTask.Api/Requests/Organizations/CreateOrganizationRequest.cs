@@ -1,6 +1,6 @@
 ﻿namespace RtsimTestTask.Api.Requests.Organizations;
 
-public class CreateOrganizationRequest
-{
-    
-}
+public record CreateOrganizationRequest(
+    string OrganizationName,
+    string? Address,
+    string? PhoneNumber);

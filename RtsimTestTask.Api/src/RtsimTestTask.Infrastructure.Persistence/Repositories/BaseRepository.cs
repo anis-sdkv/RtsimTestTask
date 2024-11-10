@@ -1,45 +1,42 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RtsimTestTask.Core;
-using RtsimTestTask.Core.Abstractions.Repositories;
-using RtsimTestTask.Core.DomainEntities;
-using RtsimTestTask.Core.Exceptions;
+using RtsimTestTask.Domain;
+using RtsimTestTask.Domain.Abstractions.Repositories;
+using RtsimTestTask.Domain.DomainEntities;
+using RtsimTestTask.Domain.Exceptions;
 using RtsimTestTask.Infrastructure.Persistence.DbContext;
 
 namespace RtsimTestTask.Infrastructure.Persistence.Repositories;
 
-public class BaseRepository<TEntity, TKey>(ApplicationDbContext dbContext) where TEntity : class
+public class BaseRepository<TEntity, TKey>(ApplicationDbContext context) where TEntity : class
 {
-    private readonly DbSet<TEntity> _dbSet = dbContext.Set<TEntity>();
+    private readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
 
-    public async Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken) =>
+    protected async Task<TEntity> BaseGetAsync(TKey id, CancellationToken cancellationToken) =>
         await _dbSet.FindAsync([id], cancellationToken) ?? throw new EntityNotFoundException(nameof(TEntity));
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken) =>
+    protected async Task<IEnumerable<TEntity>> BaseGetAllAsync(CancellationToken cancellationToken) =>
         await _dbSet.AsNoTracking().ToListAsync(cancellationToken: cancellationToken);
 
-    public TEntity Add(TEntity entity, CancellationToken cancellationToken)
+    protected async Task<TEntity> BaseAdd(TEntity entity, CancellationToken cancellationToken)
     {
-        return _dbSet.Add(entity).Entity;
+          _dbSet.Add(entity);
+          await context.SaveChangesAsync(cancellationToken);
+          return entity; 
     }
 
-    public async Task RemoveAsync(TKey id, CancellationToken cancellationToken)
+    protected async Task BaseRemoveAsync(TKey id, CancellationToken cancellationToken)
     {
         var user = await _dbSet.FindAsync([id], cancellationToken);
         if (user == null) throw new EntityNotFoundException(nameof(TEntity));
-        Remove(user);
+        _dbSet.Entry(user).State = EntityState.Detached;
+        _dbSet.Remove(user);
     }
 
 
-    public async Task UpdateAsync(TKey id, TEntity entity, CancellationToken cancellationToken)
+    protected async Task BaseUpdateAsync(TKey id, TEntity entity, CancellationToken cancellationToken)
     {
         var dbEntity = await _dbSet.FindAsync([id], cancellationToken) ??
                        throw new EntityNotFoundException(nameof(TEntity));
-        dbContext.Entry(dbEntity).CurrentValues.SetValues(entity);
-    }
-
-    private void Remove(TEntity entity)
-    {
-        _dbSet.Entry(entity).State = EntityState.Detached;
-        _dbSet.Remove(entity);
+        context.Entry(dbEntity).CurrentValues.SetValues(entity);
     }
 }

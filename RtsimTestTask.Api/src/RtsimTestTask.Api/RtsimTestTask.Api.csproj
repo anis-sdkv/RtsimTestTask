@@ -16,11 +16,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RtsimTestTask.Core\RtsimTestTask.Core.csproj" />
+      <ProjectReference Include="..\RtsimTestTask.Domain\RtsimTestTask.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="13.0.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.9.0" />
     </ItemGroup>
 

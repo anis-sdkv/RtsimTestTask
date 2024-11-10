@@ -1,33 +1,55 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RtsimTestTask.Api.DataMappers;
 using RtsimTestTask.Api.Requests.Organizations;
-using RtsimTestTask.Core.Abstractions.Services;
+using RtsimTestTask.Api.Responses;
+using RtsimTestTask.Domain.Abstractions.Services;
+using RtsimTestTask.Domain.DataTransferObjects;
+using RtsimTestTask.Domain.Roles;
 
 namespace RtsimTestTask.Api.Controllers;
 
 [ApiController]
 [Route("organizations")]
-public class OrganizationsController(IOrganizationsService service) : ControllerBase
+public class OrganizationsController(IOrganizationsService service, IMapper mapper) : ControllerBase
 {
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetOrganizationById(int id)
+    [HttpGet("{id:guid}")]
+    public async Task<OrganizationResponse> GetOrganizationById(
+        Guid id,
+        CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var result = await service.GetOrganizationByIdAsync(id, cancellationToken);
+        return mapper.Map<OrganizationResponse>(result);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> GetOrganizations(SearchOrganizationsRequest id)
+    [HttpPost("search")]
+    public async Task<IEnumerable<OrganizationResponse>> SearchOrganizations(
+        SearchOrganizationsRequest request,
+        CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var dto = mapper.Map<SearchOrganizationDto>(request);
+        var result = await service.SearchOrganizationsAsync(dto, cancellationToken);
+        return mapper.Map<IEnumerable<OrganizationResponse>>(result);
     }
 
-    // [HttpPost()]
-    // public async Task<IActionResult> CreateOrganization()
-    // {
-    //     throw new NotImplementedException();
-    // }
+    [HttpGet("{id:guid}/users")]
+    public async Task<IEnumerable<UserResponse>> GetUsersByOrganization(
+        Guid id,
+        CancellationToken cancellationToken)
+    {
+        var result = await service.GetUsersByOrganizationIdAsync(id, cancellationToken);
+        return mapper.Map<IEnumerable<UserResponse>>(result);
+    }
 
-    // public async Task<IActionResult> DeleteOrganization(int id)
-    // {
-    //     throw new NotImplementedException();
-    // }
+    [HttpPost("create")]
+    [Authorize(Roles = $"{DomainRoles.Admin}")]
+    public async Task<Guid> CreateNewOrganization(
+        CreateOrganizationRequest request,
+        CancellationToken cancellationToken)
+    {
+        var dto = mapper.Map<CreateOrganizationDto>(request);
+        return await service.CreateOrganizationAsync(dto, cancellationToken);
+    }
 }

@@ -15,7 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\RtsimTestTask.Api\RtsimTestTask.Api.csproj" />
-      <ProjectReference Include="..\RtsimTestTask.Core\RtsimTestTask.Core.csproj" />
+      <ProjectReference Include="..\RtsimTestTask.Domain\RtsimTestTask.Domain.csproj" />
       <ProjectReference Include="..\RtsimTestTask.Infrastructure.Persistence\RtsimTestTask.Infrastructure.Persistence.csproj" />
     </ItemGroup>
 

@@ -1,30 +1,35 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using RtsimTestTask.Api.Requests;
 using RtsimTestTask.Api.Requests.Account;
 using RtsimTestTask.Api.Responses;
-using RtsimTestTask.Core.Abstractions.Authentication;
+using RtsimTestTask.Domain.Abstractions.Authentication;
+using RtsimTestTask.Domain.Abstractions.Services;
+using RtsimTestTask.Domain.DataTransferObjects;
+using RtsimTestTask.Domain.Roles;
 
 namespace RtsimTestTask.Api.Controllers;
 
 [ApiController]
 [Route("/account")]
-public class AccountsController(IAuthenticationProvider authenticationProvider) : ControllerBase
+public class AccountsController(IAccountManager accountManager, IMapper mapper) : ControllerBase
 {
     [HttpPost("register")]
-    public async Task<OperationResultResponse> Register(RegisterRequest request, CancellationToken cancellationToken)
+    public async Task<IResult> Register(RegisterUserRequest userRequest, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var dto = mapper.Map<RegisterUserDto>(userRequest);
+        var createdId = await accountManager.RegisterAsync(dto, DomainRoles.User, cancellationToken);
+        return Results.Ok(createdId);
     }
 
     [HttpPost("login")]
-    public async Task<OperationResultResponse<Guid>> Register(LoginRequest request, CancellationToken cancellationToken)
+    public async Task<IResult> Login(LoginUserRequest userRequest, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
-    }
-
-    [HttpGet("logout")]
-    public async Task<OperationResultResponse> Logout(CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
+        var dto = mapper.Map<LoginUserDto>(userRequest);
+        var token = await accountManager.LoginAsync(dto, cancellationToken);
+        return Results.Ok(token);
     }
 }

@@ -5,7 +5,5 @@ public record OrganizationResponse(
     string OrganizationName,
     string Address,
     string PhoneNumber,
-    Guid OwnerId,
-    string[] EmployeeIds,
     DateTime CreatedAt
 );

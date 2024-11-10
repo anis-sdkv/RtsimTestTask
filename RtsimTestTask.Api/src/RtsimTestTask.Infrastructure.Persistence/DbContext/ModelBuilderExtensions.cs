@@ -1,56 +1,40 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RtsimTestTask.Core.DomainEntities;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using RtsimTestTask.Domain.Roles;
+using RtsimTestTask.Infrastructure.Persistence.Entities;
 
-namespace RtsimTestTask.Infrastructure.Persistence.Entities;
+namespace RtsimTestTask.Infrastructure.Persistence.DbContext;
 
 public static class ModelBuilderExtensions
 {
     private const string PostgresGuidGenFunc = "gen_random_uuid()";
-    private const string PostgresCurrentTimestampFunc = "current_timestamp()";
+    private const string PostgresCurrentTimestampFunc = "now() at time zone 'utc'";
 
     public static ModelBuilder ConfigureUsersEntity(this ModelBuilder builder) => builder
         .Entity<UserEntity>(entity =>
         {
-            entity.ToTable("users");
-            entity.HasKey(u => u.Id);
-
-            // entity.Property(u => u.Position)
-            //     .IsRequired();
-            //
-            // entity.Property(u => u.OrganizationId)
-            //     .IsRequired();
-            //
-            // entity.Property(u => u.CreatedAt)
-            //     .IsRequired()
-            //     .HasDefaultValueSql(PostgresCurrentTimestampFunc);
-
-            entity.HasOne<DomainOrganization>()
-                .WithMany()
-                .HasForeignKey(u => u.OrganizationId);
+            entity.Property(u => u.Id)
+                .HasDefaultValueSql(PostgresGuidGenFunc);
+            entity.Property(u => u.CreatedAt)
+                .IsRequired()
+                .HasDefaultValueSql(PostgresCurrentTimestampFunc);
+            entity.HasIndex(u => u.UserName)
+                .IsUnique();
         });
 
 
-    // public static ModelBuilder ConfigureOrganizationsEntity(this ModelBuilder builder) => builder
-    //     .Entity<OrganizationEntity>(entity =>
-    //     {
-    //         entity.HasKey(e => e.Id);
-    //         entity.Property(u => u.Id)
-    //             .HasDefaultValueSql(PostgresGuidGenFunc);
-    //         
-    //         entity.Property(e => e.OrganizationName)
-    //             .IsRequired();
-    //
-    //         entity.Property(e => e.Address)
-    //             .HasMaxLength(200);
-    //
-    //         entity.Property(e => e.PhoneNumber)
-    //             .HasMaxLength(20); 
-    //         entity.Property(e => e.CreatedAt)
-    //             .HasDefaultValueSql(PostgresCurrentTimestampFunc); 
-    //
-    //         entity.HasMany(e => e.Employees)
-    //             .WithOne(u => u.Ogani) // Предполагается, что у UserEntity есть навигационное свойство Organization
-    //             .HasForeignKey(u => u.OrganizationId) // Внешний ключ в таблице пользователей
-    //             .OnDelete(DeleteBehavior.Cascade); // Поведение при удалении организации
-    //     });
+    public static ModelBuilder ConfigureOrganizationsEntity(this ModelBuilder builder) => builder
+        .Entity<OrganizationEntity>(entity =>
+        {
+            entity.Property(o => o.Id)
+                .HasDefaultValueSql(PostgresGuidGenFunc);
+            entity.Property(o => o.CreatedAt)
+                .IsRequired()
+                .HasDefaultValueSql(PostgresCurrentTimestampFunc);
+            entity.HasIndex(o => o.OrganizationName)
+                .IsUnique();
+        });
+    public static ModelBuilder ConfigureRoles(this ModelBuilder builder) => builder
+        .Entity<Role>(entity => { entity.HasData(new Role(DomainRoles.Admin), new Role(DomainRoles.User)); });
+    
 }

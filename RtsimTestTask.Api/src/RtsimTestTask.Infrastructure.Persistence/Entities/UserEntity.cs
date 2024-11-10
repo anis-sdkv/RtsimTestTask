@@ -4,7 +4,8 @@ namespace RtsimTestTask.Infrastructure.Persistence.Entities;
 
 public class UserEntity : IdentityUser
 {
+    public DateTime? CreatedAt { get; set; }
     public string Position { get; set; }
     public Guid OrganizationId { get; set; }
-    public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+    public OrganizationEntity Organization { get; set; }
 }

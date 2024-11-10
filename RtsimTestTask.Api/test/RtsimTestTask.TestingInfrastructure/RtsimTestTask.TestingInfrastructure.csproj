@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\RtsimTestTask.Core\RtsimTestTask.Core.csproj" />
+      <ProjectReference Include="..\..\src\RtsimTestTask.Domain\RtsimTestTask.Domain.csproj" />
     </ItemGroup>
 
 </Project>

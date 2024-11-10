@@ -1,6 +1,6 @@
 ﻿using AutoBogus;
 using Bogus;
-using RtsimTestTask.Core.DomainEntities;
+using RtsimTestTask.Domain.DomainEntities;
 
 namespace RtsimTestTask.TestingInfrastructure.Fakers;
 

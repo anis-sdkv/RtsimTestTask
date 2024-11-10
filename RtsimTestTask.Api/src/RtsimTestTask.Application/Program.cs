@@ -1,19 +1,32 @@
+using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using RtsimTestTask.Api.DataMappers;
 using RtsimTestTask.Api.Extensions;
-using RtsimTestTask.Infrastructure.Persistence.DbContext;
-using RtsimTestTask.Infrastructure.Persistence.Extensions;
+using RtsimTestTask.Application;
+using RtsimTestTask.Infrastructure.Persistence.DataMappers;
+using RtsimTestTask.Infrastructure.Persistence.InfrastructureConfigureExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDomain(builder.Configuration);
 builder.Services.AddApi(builder.Configuration);
-builder.Services.AddPersistence(builder.Configuration);
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.ExpireTimeSpan = TimeSpan.FromDays(14);
-        options.SlidingExpiration = true;
-    });
+builder.Services.AddInfrastructure(builder.Configuration);
+
+
+Action<IMapperConfigurationExpression> action = config =>
+{
+    config.AddProfile<ApiMappingProfile>();
+    config.AddProfile<InfrastructureMappingProfile>();
+};
+
+var config = new MapperConfiguration(action);
+config.AssertConfigurationIsValid();
+builder.Services.AddAutoMapper(action);
 
 var app = builder.Build();
+await app.AddAdmins();
 
 if (app.Environment.IsDevelopment())
 {
@@ -22,6 +35,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseHttpsRedirection();
 app.MapControllers();
 

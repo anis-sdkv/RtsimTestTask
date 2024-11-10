@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsimTestTask.Application",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsimTestTask.Infrastructure.Persistence", "src\RtsimTestTask.Infrastructure.Persistence\RtsimTestTask.Infrastructure.Persistence.csproj", "{A49C2536-116A-4DD3-8B09-25A076DD029E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsimTestTask.Core", "src\RtsimTestTask.Core\RtsimTestTask.Core.csproj", "{B24D5C8A-A524-4A95-A658-C6E7749A1490}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsimTestTask.Domain", "src\RtsimTestTask.Domain\RtsimTestTask.Domain.csproj", "{B24D5C8A-A524-4A95-A658-C6E7749A1490}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C7519737-41A8-4489-A7E9-2F19BCDF537F}"
 EndProject
