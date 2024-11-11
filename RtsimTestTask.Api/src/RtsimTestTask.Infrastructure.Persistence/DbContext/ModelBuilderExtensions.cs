@@ -34,7 +34,7 @@ public static class ModelBuilderExtensions
             entity.HasIndex(o => o.OrganizationName)
                 .IsUnique();
         });
+
     public static ModelBuilder ConfigureRoles(this ModelBuilder builder) => builder
         .Entity<Role>(entity => { entity.HasData(new Role(DomainRoles.Admin), new Role(DomainRoles.User)); });
-    
 }

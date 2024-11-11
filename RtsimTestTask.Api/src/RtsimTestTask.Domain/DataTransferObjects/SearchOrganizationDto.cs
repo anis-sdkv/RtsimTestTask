@@ -3,9 +3,9 @@
 public record SearchOrganizationDto(
     int Page,
     int PageSize,
-    SearchOrganizationDto.QueryParameters? QueryParams,
-    SearchOrganizationDto.SortParameters? SortParams,
-    SearchOrganizationDto.DateFilterParameters? DateFilterParams
+    SearchOrganizationDto.QueryParameters? QueryParams = null,
+    SearchOrganizationDto.SortParameters? SortParams = null,
+    SearchOrganizationDto.DateFilterParameters? DateFilterParams = null
 )
 {
     public record QueryParameters(

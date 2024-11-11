@@ -44,7 +44,7 @@ public static class WebApplicationExtensions
                 default
             );
         }
-        catch (UserExistException e)
+        catch (UserAlreadyExistException e)
         {
             // Already created
         }

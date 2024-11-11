@@ -1,6 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Transactions;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using RtsimTestTask.Domain.Abstractions.Authentication;
+using RtsimTestTask.Domain.Abstractions.Repositories;
 using RtsimTestTask.Domain.Abstractions.Services;
 using RtsimTestTask.Domain.DataTransferObjects;
 using RtsimTestTask.Domain.DomainEntities;
@@ -15,6 +17,7 @@ public class AccountManager(
     UserManager<UserEntity> userManager,
     IJwtProvider jwtProvider,
     ApplicationDbContext context,
+    IOrganizationsRepository organizationsRepository,
     IMapper mapper
 ) : IAccountManager
 {
@@ -37,20 +40,26 @@ public class AccountManager(
     {
         var userEntity = mapper.Map<UserEntity>(registerData);
         var user = await userManager.FindByNameAsync(registerData.UserName);
-        if (user is not null) throw new UserExistException(registerData.UserName);
+        if (user is not null) throw new UserAlreadyExistException(registerData.UserName);
 
-        await using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
-        var result = await userManager.CreateAsync(userEntity, registerData.Password);
-        if (!result.Succeeded)
-            throw new RegistrationException(result.Errors.Select(x => x.Description));
-        var roleResult = await userManager.AddToRoleAsync(userEntity, role);
-        if (!roleResult.Succeeded || !result.Succeeded)
+        var organization = await organizationsRepository.GetByIdAsync(registerData.OrganizationId, cancellationToken);
+        if (organization is null) throw new OrganizationNotExistException(registerData.OrganizationId);
+
+        await using (var transaction = await context.Database.BeginTransactionAsync(cancellationToken))
         {
-            await transaction.RollbackAsync(cancellationToken);
-            throw new RegistrationException(result.Errors.Select(x => x.Description));
+            var result = await userManager.CreateAsync(userEntity, registerData.Password);
+            if (!result.Succeeded)
+                throw new RegistrationException(result.Errors.Select(x => x.Description));
+            var roleResult = await userManager.AddToRoleAsync(userEntity, role);
+            if (!roleResult.Succeeded)
+            {
+                await transaction.RollbackAsync(cancellationToken);
+                throw new TransactionAbortedException();
+            }
+
+            await transaction.CommitAsync(cancellationToken);
         }
 
-        await transaction.CommitAsync(cancellationToken);
         return Guid.Parse(userEntity.Id);
     }
 

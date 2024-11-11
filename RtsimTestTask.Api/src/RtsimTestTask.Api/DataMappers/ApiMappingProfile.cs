@@ -11,10 +11,9 @@ public class ApiMappingProfile : Profile
 {
     public ApiMappingProfile()
     {
-        CreateOrganizationModelMaps();
+        CreateRequestMaps();
+        CreateResponseMaps();
         CreateAccountModelMaps();
-
-        CreateMap<DomainUser, UserResponse>();
     }
 
     private void CreateAccountModelMaps()
@@ -23,15 +22,20 @@ public class ApiMappingProfile : Profile
         CreateMap<RegisterUserRequest, RegisterUserDto>();
     }
 
-    private void CreateOrganizationModelMaps()
+    private void CreateRequestMaps()
     {
         CreateMap<CreateOrganizationRequest, CreateOrganizationDto>();
-
         CreateMap<UpdateOrganizationRequest, UpdateOrganizationDto>();
 
         CreateMap<SearchOrganizationsRequest, SearchOrganizationDto>();
         CreateMap<SearchOrganizationsRequest.QueryParameters, SearchOrganizationDto.QueryParameters>();
         CreateMap<SearchOrganizationsRequest.SortParameters, SearchOrganizationDto.SortParameters>();
         CreateMap<SearchOrganizationsRequest.DateFilterParameters, SearchOrganizationDto.DateFilterParameters>();
+    }
+
+    private void CreateResponseMaps()
+    {
+        CreateMap<DomainUser, UserResponse>();
+        CreateMap<DomainOrganization, OrganizationResponse>();
     }
 }

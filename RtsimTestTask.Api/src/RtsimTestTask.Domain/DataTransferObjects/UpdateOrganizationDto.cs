@@ -3,7 +3,6 @@
 public record UpdateOrganizationDto(
     Guid Id,
     string OrganizationName,
-    string Address,
-    string PhoneNumber,
-    Guid OwnerId
+    string? Address,
+    string? PhoneNumber
 );

@@ -7,24 +7,22 @@ using RtsimTestTask.Infrastructure.Persistence.Options;
 
 namespace RtsimTestTask.Infrastructure.Persistence.DbContext;
 
-public sealed class ApplicationDbContext : IdentityDbContext<UserEntity>
+public class ApplicationDbContext : IdentityDbContext<UserEntity>
 {
     public new DbSet<UserEntity> Users { get; set; }
     public DbSet<OrganizationEntity> Organizations { get; set; }
-    private readonly IOptions<InfrastructureOptions> _infrastructureConfig;
+    private readonly IOptions<InfrastructureOptions> _infrastructureOptions;
 
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options,
-        IOptions<InfrastructureOptions> infrastructureConfig) : base(options)
+        IOptions<InfrastructureOptions> infrastructureOptions) : base(options)
     {
-        _infrastructureConfig = infrastructureConfig;
+        _infrastructureOptions = infrastructureOptions;
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(_infrastructureConfig.Value.ConnectionString);
-        optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-
+        optionsBuilder.UseNpgsql(_infrastructureOptions.Value.ConnectionString);
         base.OnConfiguring(optionsBuilder);
     }
 

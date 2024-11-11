@@ -14,6 +14,10 @@ public class InfrastructureMappingProfile : Profile
             .ForSourceMember(src => src.Password, opt => opt.DoNotValidate());
 
 
-        CreateMap<OrganizationEntity, DomainOrganization>(MemberList.Destination);
+        CreateMap<OrganizationEntity, DomainOrganization>(MemberList.Destination)
+            .ReverseMap();
+
+        CreateMap<UserEntity, DomainUser>(MemberList.Destination)
+            .ReverseMap();
     }
 }

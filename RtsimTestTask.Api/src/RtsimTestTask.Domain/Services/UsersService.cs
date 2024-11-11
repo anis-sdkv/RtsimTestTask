@@ -7,5 +7,5 @@ namespace RtsimTestTask.Domain.Services;
 public class UsersService(IUsersRepository users) : IUsersService
 {
     public Task<DomainUser> GetByIdAsync(Guid userId, CancellationToken cancellationToken) =>
-        users.GetUserById(userId, cancellationToken);
+        users.GetUserByIdAsync(userId, cancellationToken);
 }

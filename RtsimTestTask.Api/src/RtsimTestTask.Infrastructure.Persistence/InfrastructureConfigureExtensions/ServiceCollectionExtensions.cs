@@ -19,7 +19,10 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfigurationRoot config)
     {
-        services.Configure<InfrastructureOptions>(config.GetRequiredSection(nameof(InfrastructureOptions)));
+        var infrastructureConfig = config.GetRequiredSection(nameof(InfrastructureOptions));
+        var infrastructureOptions =
+            infrastructureConfig.Get<InfrastructureOptions>() ?? throw new ArgumentNullException();
+        services.Configure<InfrastructureOptions>(infrastructureConfig);
         services.ConfigureIdentityAuthentication(config);
 
         services.AddScoped<IAccountManager, AccountManager>();
@@ -47,36 +50,14 @@ public static class ServiceCollectionExtensions
         var jwtOptions = jwtConfig.Get<JwtOptions>() ?? throw new ArgumentNullException();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = jwtOptions.Issuer,
-                    ValidateAudience = true,
-                    ValidAudiences = [jwtOptions.Audience],
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = jwtOptions.GetSymmetricSecurityKey(),
-                    ValidateLifetime = true,
-                };
-            });
+            .AddJwtBearer(jwtOptions.Configure);
         services.AddAuthorization();
 
         services.AddIdentityCore<UserEntity>()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        services.Configure<IdentityOptions>(options =>
-        {
-            options.Password.RequireDigit = false;
-            options.Password.RequireLowercase = false;
-            options.Password.RequireNonAlphanumeric = false;
-            options.Password.RequireUppercase = false;
-            options.Password.RequiredLength = 1;
-
-            options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-        });
+        services.Configure<IdentityOptions>(new AppIdentityOptions().Configure);
         return services;
     }
 }

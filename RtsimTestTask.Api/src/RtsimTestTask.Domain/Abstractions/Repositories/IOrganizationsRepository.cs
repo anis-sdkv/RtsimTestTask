@@ -9,9 +9,11 @@ public interface IOrganizationsRepository
         SearchOrganizationDto searchParams,
         CancellationToken cancellationToken);
 
+    Task<IEnumerable<DomainOrganization>> GetAllAsync(CancellationToken cancellationToken);
+
     Task<DomainOrganization?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     Task<DomainOrganization?> GetByNameAsync(string name, CancellationToken cancellationToken);
     Task UpdateAsync(UpdateOrganizationDto dto, CancellationToken cancellationToken);
-    Task<Guid> Create(CreateOrganizationDto dto, CancellationToken cancellationToken);
-    Task RemoveAsync(Guid entity, CancellationToken cancellationToken);
+    Task<Guid> CreateAsync(CreateOrganizationDto dto, CancellationToken cancellationToken);
+    Task RemoveAsync(Guid id, CancellationToken cancellationToken);
 }

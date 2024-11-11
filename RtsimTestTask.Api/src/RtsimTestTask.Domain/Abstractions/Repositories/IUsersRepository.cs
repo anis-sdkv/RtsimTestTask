@@ -5,6 +5,6 @@ namespace RtsimTestTask.Domain.Abstractions.Repositories;
 
 public interface IUsersRepository
 {
-    Task<IEnumerable<DomainUser>> GetUsersByOrganization(Guid organizationId, CancellationToken cancellationToken);
-    Task<DomainUser> GetUserById(Guid id, CancellationToken cancellationToken);
+    Task<IEnumerable<DomainUser>> GetUsersByOrganizationAsync(Guid organizationId, CancellationToken cancellationToken);
+    Task<DomainUser> GetUserByIdAsync(Guid id, CancellationToken cancellationToken);
 }

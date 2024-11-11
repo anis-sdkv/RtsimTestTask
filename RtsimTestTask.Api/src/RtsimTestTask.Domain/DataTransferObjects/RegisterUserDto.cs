@@ -4,7 +4,7 @@ public record RegisterUserDto(
     string UserName,
     string Password,
     Guid OrganizationId,
-    string Position,
+    string? Position = null,
     string? Email = null,
     string? PhoneNumber = null
 );

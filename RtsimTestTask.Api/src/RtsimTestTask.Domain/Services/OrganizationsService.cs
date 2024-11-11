@@ -11,7 +11,7 @@ public class OrganizationsService(IOrganizationsRepository organizations, IUsers
     public Task<Guid> CreateOrganizationAsync(
         CreateOrganizationDto createData,
         CancellationToken cancellationToken
-    ) => organizations.Create(createData, cancellationToken);
+    ) => organizations.CreateAsync(createData, cancellationToken);
 
     public Task<DomainOrganization?> GetOrganizationByIdAsync(
         Guid organizationId,
@@ -31,7 +31,7 @@ public class OrganizationsService(IOrganizationsRepository organizations, IUsers
     public Task<IEnumerable<DomainUser>> GetUsersByOrganizationIdAsync(
         Guid organizationId,
         CancellationToken cancellationToken
-    ) => users.GetUsersByOrganization(organizationId, cancellationToken);
+    ) => users.GetUsersByOrganizationAsync(organizationId, cancellationToken);
 
     public Task UpdateOrganizationAsync(
         UpdateOrganizationDto dto,

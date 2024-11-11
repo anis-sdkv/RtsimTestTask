@@ -14,7 +14,6 @@ builder.Services.AddDomain(builder.Configuration);
 builder.Services.AddApi(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 
-
 Action<IMapperConfigurationExpression> action = config =>
 {
     config.AddProfile<ApiMappingProfile>();

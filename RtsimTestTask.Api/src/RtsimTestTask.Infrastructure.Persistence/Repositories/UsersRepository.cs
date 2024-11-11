@@ -1,19 +1,32 @@
-﻿using RtsimTestTask.Domain.Abstractions.Repositories;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using RtsimTestTask.Domain.Abstractions.Repositories;
 using RtsimTestTask.Domain.DomainEntities;
 using RtsimTestTask.Infrastructure.Persistence.DbContext;
 using RtsimTestTask.Infrastructure.Persistence.Entities;
 
 namespace RtsimTestTask.Infrastructure.Persistence.Repositories;
 
-public class UsersRepository(ApplicationDbContext dbContext) : IUsersRepository
+public class UsersRepository(ApplicationDbContext context, IMapper mapper) : IUsersRepository
 {
-    public Task<IEnumerable<DomainUser>> GetUsersByOrganization(Guid organizationId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<DomainUser>> GetUsersByOrganizationAsync(
+        Guid organizationId,
+        CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var result = await context.Users
+            .AsNoTracking()
+            .Where(x => x.OrganizationId == organizationId)
+            .ToListAsync(cancellationToken);
+        return mapper.Map<List<DomainUser>>(result);
     }
 
-    public Task<DomainUser> GetUserById(Guid id, CancellationToken cancellationToken)
+    public async Task<DomainUser> GetUserByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var result = await context.Users
+            .AsNoTracking()
+            .Where(x => x.Id == id.ToString())
+            .SingleOrDefaultAsync(cancellationToken);
+
+        return mapper.Map<DomainUser>(result);
     }
 }
