@@ -29,4 +29,12 @@ public class UsersRepository(ApplicationDbContext context, IMapper mapper) : IUs
 
         return mapper.Map<DomainUser>(result);
     }
+
+    public async Task<IEnumerable<DomainUser>> GetAllUsersAsync(CancellationToken cancellationToken)
+    {
+        var result = await context.Users
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+        return mapper.Map<List<DomainUser>>(result);
+    }
 }

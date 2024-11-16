@@ -8,8 +8,8 @@ using RtsimTestTask.Api.Requests.Account;
 using RtsimTestTask.Api.Responses;
 using RtsimTestTask.Domain.Abstractions.Authentication;
 using RtsimTestTask.Domain.Abstractions.Services;
+using RtsimTestTask.Domain.Constants;
 using RtsimTestTask.Domain.DataTransferObjects;
-using RtsimTestTask.Domain.Roles;
 
 namespace RtsimTestTask.Api.Controllers;
 

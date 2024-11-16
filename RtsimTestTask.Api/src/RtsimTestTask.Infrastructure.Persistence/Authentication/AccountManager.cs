@@ -49,7 +49,7 @@ public class AccountManager(
         {
             var result = await userManager.CreateAsync(userEntity, registerData.Password);
             if (!result.Succeeded)
-                throw new RegistrationException(result.Errors.Select(x => x.Description));
+                throw new RegistrationException(result.Errors.Select(x => x.Description).ToList());
             var roleResult = await userManager.AddToRoleAsync(userEntity, role);
             if (!roleResult.Succeeded)
             {

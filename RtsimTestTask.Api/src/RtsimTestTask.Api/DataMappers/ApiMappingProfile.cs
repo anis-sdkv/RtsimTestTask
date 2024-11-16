@@ -13,17 +13,13 @@ public class ApiMappingProfile : Profile
     {
         CreateRequestMaps();
         CreateResponseMaps();
-        CreateAccountModelMaps();
-    }
-
-    private void CreateAccountModelMaps()
-    {
-        CreateMap<LoginUserRequest, LoginUserDto>();
-        CreateMap<RegisterUserRequest, RegisterUserDto>();
     }
 
     private void CreateRequestMaps()
     {
+        CreateMap<LoginUserRequest, LoginUserDto>();
+        CreateMap<RegisterUserRequest, RegisterUserDto>();
+
         CreateMap<CreateOrganizationRequest, CreateOrganizationDto>();
         CreateMap<UpdateOrganizationRequest, UpdateOrganizationDto>();
 

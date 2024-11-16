@@ -210,6 +210,21 @@ public class OrganizationRepositoryTests
     }
 
     [Fact]
+    public async Task SearchOrganizationsAsync_WithEmptyPage_ReturnsEmptyResult()
+    {
+        var count = 20;
+        var source = OrganizationFaker.Generate(count)
+            .ToArray();
+        await _fixture.Seed(source);
+        var searchParams = new SearchOrganizationDto(0, 0);
+
+        var resultCollection = (await _organizationsRepository.SearchAsync(searchParams, CancellationToken.None))
+            .ToArray();
+
+        resultCollection.Should().BeEmpty();
+    }
+
+    [Fact]
     public async Task GetAllAsync_ReturnsAllOrganizations()
     {
         // Arrange

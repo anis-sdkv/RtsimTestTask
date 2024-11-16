@@ -3,4 +3,5 @@
 public record CreateOrganizationRequest(
     string OrganizationName,
     string? Address,
-    string? PhoneNumber);
+    string? PhoneNumber
+);

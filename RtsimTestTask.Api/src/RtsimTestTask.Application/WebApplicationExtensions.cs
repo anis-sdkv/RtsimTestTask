@@ -1,21 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using RtsimTestTask.Domain.Abstractions.Authentication;
 using RtsimTestTask.Domain.Abstractions.Services;
+using RtsimTestTask.Domain.Constants;
 using RtsimTestTask.Domain.DataTransferObjects;
 using RtsimTestTask.Domain.Exceptions;
-using RtsimTestTask.Domain.Roles;
 using RtsimTestTask.Infrastructure.Persistence.Options;
 
-namespace RtsimTestTask.Infrastructure.Persistence.InfrastructureConfigureExtensions;
-
-// TODO: переделать
+namespace RtsimTestTask.Application;
 public static class WebApplicationExtensions
 {
     private const string AdminOrganizationName = "Admins";
 
-    public static async Task AddAdmins(this WebApplication app)
+    public static async Task CreateAdminAccountAsync(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
         var serviceProvider = scope.ServiceProvider;
@@ -23,7 +19,7 @@ public static class WebApplicationExtensions
         var accountManager = serviceProvider.GetRequiredService<IAccountManager>();
         var adminData = serviceProvider.GetRequiredService<IOptions<InfrastructureOptions>>().Value.AdminAccountData;
 
-        var id = await GetAdminOrganizationIdOrCreateIfNotExist(serviceProvider
+        var id = await GetAdminOrganizationIdAndCreateIfNotExist(serviceProvider
             .GetRequiredService<IOrganizationsService>());
         await CreateAdminAccountIfNotExist(id, accountManager, adminData);
     }
@@ -50,7 +46,7 @@ public static class WebApplicationExtensions
         }
     }
 
-    private static async Task<Guid> GetAdminOrganizationIdOrCreateIfNotExist(IOrganizationsService organizationsService)
+    private static async Task<Guid> GetAdminOrganizationIdAndCreateIfNotExist(IOrganizationsService organizationsService)
     {
         var adminOrganization = await organizationsService
             .GetOrganizationByNameAsync(AdminOrganizationName, default);

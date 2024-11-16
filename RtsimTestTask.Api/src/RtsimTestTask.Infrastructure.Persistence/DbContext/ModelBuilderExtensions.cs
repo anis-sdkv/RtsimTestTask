@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using RtsimTestTask.Domain.Roles;
+using RtsimTestTask.Domain.Constants;
 using RtsimTestTask.Infrastructure.Persistence.Entities;
 
 namespace RtsimTestTask.Infrastructure.Persistence.DbContext;

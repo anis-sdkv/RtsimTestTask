@@ -13,6 +13,9 @@ public class OrganizationsService(IOrganizationsRepository organizations, IUsers
         CancellationToken cancellationToken
     ) => organizations.CreateAsync(createData, cancellationToken);
 
+    public Task<IEnumerable<DomainOrganization>> GetAllAsync(CancellationToken cancellationToken) =>
+        organizations.GetAllAsync(cancellationToken);
+
     public Task<DomainOrganization?> GetOrganizationByIdAsync(
         Guid organizationId,
         CancellationToken cancellationToken

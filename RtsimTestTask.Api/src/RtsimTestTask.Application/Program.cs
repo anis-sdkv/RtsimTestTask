@@ -1,10 +1,7 @@
-using System.Text;
 using AutoMapper;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 using RtsimTestTask.Api.DataMappers;
 using RtsimTestTask.Api.Extensions;
+using RtsimTestTask.Api.Middleware;
 using RtsimTestTask.Application;
 using RtsimTestTask.Infrastructure.Persistence.DataMappers;
 using RtsimTestTask.Infrastructure.Persistence.InfrastructureConfigureExtensions;
@@ -25,7 +22,7 @@ config.AssertConfigurationIsValid();
 builder.Services.AddAutoMapper(action);
 
 var app = builder.Build();
-await app.AddAdmins();
+await app.CreateAdminAccountAsync();
 
 if (app.Environment.IsDevelopment())
 {
@@ -35,6 +32,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<DefaultExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 app.MapControllers();

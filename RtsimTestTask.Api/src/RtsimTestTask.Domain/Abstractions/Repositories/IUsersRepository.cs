@@ -7,4 +7,5 @@ public interface IUsersRepository
 {
     Task<IEnumerable<DomainUser>> GetUsersByOrganizationAsync(Guid organizationId, CancellationToken cancellationToken);
     Task<DomainUser> GetUserByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<IEnumerable<DomainUser>> GetAllUsersAsync( CancellationToken cancellationToken);
 }

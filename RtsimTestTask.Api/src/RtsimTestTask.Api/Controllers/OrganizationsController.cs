@@ -6,8 +6,8 @@ using RtsimTestTask.Api.DataMappers;
 using RtsimTestTask.Api.Requests.Organizations;
 using RtsimTestTask.Api.Responses;
 using RtsimTestTask.Domain.Abstractions.Services;
+using RtsimTestTask.Domain.Constants;
 using RtsimTestTask.Domain.DataTransferObjects;
-using RtsimTestTask.Domain.Roles;
 
 namespace RtsimTestTask.Api.Controllers;
 
@@ -22,6 +22,13 @@ public class OrganizationsController(IOrganizationsService service, IMapper mapp
     {
         var result = await service.GetOrganizationByIdAsync(id, cancellationToken);
         return mapper.Map<OrganizationResponse>(result);
+    }
+
+    [HttpGet]
+    public async Task<IEnumerable<OrganizationResponse>> GetAllOrganizations(CancellationToken cancellationToken)
+    {
+        var result = await service.GetAllAsync(cancellationToken);
+        return mapper.Map<IEnumerable<OrganizationResponse>>(result);
     }
 
     [HttpPost("search")]

@@ -8,4 +8,7 @@ public class UsersService(IUsersRepository users) : IUsersService
 {
     public Task<DomainUser> GetByIdAsync(Guid userId, CancellationToken cancellationToken) =>
         users.GetUserByIdAsync(userId, cancellationToken);
+
+    public Task<IEnumerable<DomainUser>> GetAllAsync(CancellationToken cancellationToken) =>
+        users.GetAllUsersAsync(cancellationToken);
 }

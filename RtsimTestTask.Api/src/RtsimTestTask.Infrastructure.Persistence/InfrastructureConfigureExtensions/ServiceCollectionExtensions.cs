@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RtsimTestTask.Domain.Abstractions.Authentication;
 using RtsimTestTask.Domain.Abstractions.Repositories;
+using RtsimTestTask.Domain.Constants;
 using RtsimTestTask.Infrastructure.Persistence.Authentication;
 using RtsimTestTask.Infrastructure.Persistence.DbContext;
 using RtsimTestTask.Infrastructure.Persistence.Entities;
@@ -57,7 +58,18 @@ public static class ServiceCollectionExtensions
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        services.Configure<IdentityOptions>(new AppIdentityOptions().Configure);
+        services.Configure<IdentityOptions>(ConfigureIdentityOptions);
         return services;
+    }
+
+    private static void ConfigureIdentityOptions(IdentityOptions options)
+    {
+        options.Password.RequireDigit = PasswordComplexityContanst.RequiresDigit;
+        options.Password.RequireLowercase = PasswordComplexityContanst.RequiresLowercase;
+        options.Password.RequireNonAlphanumeric = PasswordComplexityContanst.RequireNonAlphanumeric;
+        options.Password.RequireUppercase = PasswordComplexityContanst.RequiresUppercase;
+        options.Password.RequiredLength = PasswordComplexityContanst.MinPasswordLength;
+
+        options.User.AllowedUserNameCharacters = UsernameConstants.AllowedUserNameCharacters;
     }
 }

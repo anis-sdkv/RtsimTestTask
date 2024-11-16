@@ -4,7 +4,7 @@ public record RegisterUserRequest(
     string Username,
     string Password,
     Guid OrganizationId,
-    string Position,
+    string? Position,
     string? Email,
     string? PhoneNumber
 );

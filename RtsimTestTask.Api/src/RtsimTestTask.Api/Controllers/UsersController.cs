@@ -15,4 +15,11 @@ public class UsersController(IUsersService service, IMapper mapper)
         var result = await service.GetByIdAsync(id, cancellationToken);
         return mapper.Map<UserResponse>(result);
     }
+
+    [HttpGet]
+    public async Task<IEnumerable<UserResponse>> GetAllUsers(CancellationToken cancellationToken)
+    {
+        var result = await service.GetAllAsync(cancellationToken);
+        return mapper.Map<IEnumerable<UserResponse>>(result);
+    }
 }

@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Reflection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RtsimTestTask.Api.DataMappers;
 
@@ -13,6 +16,10 @@ public static class ServiceCollectionExtensions
         services.AddControllers();
         services.AddSwaggerGen();
         services.AddEndpointsApiExplorer();
+        
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddFluentValidationAutoValidation();
+        
         return services;
     }
 }

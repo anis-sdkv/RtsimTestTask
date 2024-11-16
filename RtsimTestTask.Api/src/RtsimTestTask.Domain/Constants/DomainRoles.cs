@@ -1,4 +1,4 @@
-﻿namespace RtsimTestTask.Domain.Roles;
+﻿namespace RtsimTestTask.Domain.Constants;
 
 public static class DomainRoles
 {

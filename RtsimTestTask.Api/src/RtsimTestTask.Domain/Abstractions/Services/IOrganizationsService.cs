@@ -7,9 +7,12 @@ public interface IOrganizationsService
 {
     Task<Guid> CreateOrganizationAsync(CreateOrganizationDto createData, CancellationToken cancellationToken);
 
+    Task<IEnumerable<DomainOrganization>> GetAllAsync(CancellationToken cancellationToken);
+
     Task<DomainOrganization?> GetOrganizationByIdAsync(
         Guid organizationId,
         CancellationToken cancellationToken);
+
 
     Task<DomainOrganization?> GetOrganizationByNameAsync(
         string name,
