@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{51090A32-2D41-4F73-97D6-68DA50D23FBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsimTestTask.Refactoring.App", "src\RtsimTestTask.Refactoring.App\RtsimTestTask.Refactoring.App.csproj", "{2B9A6623-FB82-4ADA-A58A-819452E4CB7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{37E0DD1D-AAE2-4E28-B75A-4BA47E2499E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtsimTestTask.Refactoring.Tests", "test\RtsimTestTask.Refactoring.Tests\RtsimTestTask.Refactoring.Tests.csproj", "{3BF21BEB-1F17-4C15-9C9B-B656D522FE5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2B9A6623-FB82-4ADA-A58A-819452E4CB7F} = {51090A32-2D41-4F73-97D6-68DA50D23FBF}
+		{3BF21BEB-1F17-4C15-9C9B-B656D522FE5B} = {37E0DD1D-AAE2-4E28-B75A-4BA47E2499E7}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B9A6623-FB82-4ADA-A58A-819452E4CB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B9A6623-FB82-4ADA-A58A-819452E4CB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B9A6623-FB82-4ADA-A58A-819452E4CB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B9A6623-FB82-4ADA-A58A-819452E4CB7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BF21BEB-1F17-4C15-9C9B-B656D522FE5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BF21BEB-1F17-4C15-9C9B-B656D522FE5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BF21BEB-1F17-4C15-9C9B-B656D522FE5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BF21BEB-1F17-4C15-9C9B-B656D522FE5B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
